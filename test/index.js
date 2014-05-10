@@ -1,10 +1,23 @@
 /* global require, describe, it */
 
 var assert = require("assert"),
-    tilde = require("../git-tilde-time");
+    GitTildeTime = require("../git-tilde-time");
 
 describe('git-tilde-time', function() {
   it('should exist', function () {
-    assert(tilde);
+    assert(GitTildeTime);
+  });
+
+  describe('total', function () {
+    it('should return total time logged for project', function () {
+      // arrange
+      var gitTildeTime = new GitTildeTime(),
+          total;
+
+      // act
+      total = gitTildeTime.total();
+
+      assert(total, 0);
+    });
   });
 });
