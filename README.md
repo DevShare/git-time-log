@@ -1,26 +1,26 @@
-git-tilde-time
+git-time-log
 ==============
 
-Provides statistics for tilde-based time entries in commit messages.
+Provides statistics for time entries in commit messages.
 
-Still in early-stage development, but the basics work. 
+Still in early-stage development, but the basics work.
 
 #### Usage:
 
 ```
 // import
-var GitTildeTime = require('git-tilde-time');
+var GitTimeLog = require('git-time-log');
 
 // initialize
-var gtt = new GitTildeTime();
+var gtl = new GitTimeLog();
 
 // get total time for repository
-gtt.totalMinutes(function (total) {
+gtl.totalMinutes(function (total) {
   console.log(total);
 });
 
 // get total time by user (email)
-gtt.totalMinsByUser(function (totalsByUser) {
+gtl.totalMinsByUser(function (totalsByUser) {
   console.dir(totalsByUser);
 });
 ```

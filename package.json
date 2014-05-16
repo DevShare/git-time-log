@@ -1,12 +1,12 @@
 {
-  "name": "git-tilde-time",
+  "name": "git-time-log",
   "private": true,
   "scripts": {
     "test": "NODE_ENV=test mocha --reporter list"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DevShare/git-tilde-time.git"
+    "url": "https://github.com/DevShare/git-time-log.git"
   },
   "dependencies": {
     "gitlog": "0.0.1",

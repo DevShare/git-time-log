@@ -1,21 +1,21 @@
 /* global require, describe, it */
 
 var assert = require("assert"),
-    GitTildeTime = require("../git-tilde-time");
+    GitTimeLog = require("../git-time-log");
 
-describe('git-tilde-time', function() {
+describe('git-time-log', function() {
   it('should exist', function () {
-    assert(GitTildeTime);
+    assert(GitTimeLog);
   });
 
   describe('total', function () {
     it('should return total time logged for project', function () {
       // arrange
-      var gitTildeTime = new GitTildeTime(),
+      var GitTimeLog = new GitTimeLog(),
           total;
 
       // act
-      total = gitTildeTime.total();
+      total = GitTimeLog.total();
 
       assert(total, 0);
     });
