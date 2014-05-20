@@ -1,6 +1,5 @@
 {
   "name": "git-time-log",
-  "private": true,
   "scripts": {
     "test": "mocha"
   },
