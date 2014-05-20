@@ -15,6 +15,7 @@ var GitTimeLog = function (opts) {
   this._author = opts['author'];
   this._number = opts['number'] || 9999999;
 
+  // formats minutes into tilde-based time format
   this.formatTime = function (totalMins) {
     var duration = moment.duration({ minutes: totalMins }),
         hours = Math.floor(duration.asHours()),
@@ -31,6 +32,8 @@ var GitTimeLog = function (opts) {
     return '~' + hours + ':' + mins;
   };
 
+  // parses a commit message for a tilde-based time entry
+  //   and returns an object with hours and minutes
   this.getTimeFromMessage = function (message) {
     var timeRegex = /~(\d?\d?):(\d\d)/,
         match = message.match(timeRegex),
@@ -45,12 +48,15 @@ var GitTimeLog = function (opts) {
     return { hours: hours, minutes: minutes };
   };
 
+  // parses a commit message for a tilde-based time entry
+  //   and returns time as minutes
   this.getMinsFromMessage = function (message) {
     var messageTime = this.getTimeFromMessage(message);
 
     return (messageTime.hours * 60) + messageTime.minutes;
   };
 
+  // applies parseFn to each commit (for <number> commits)
   this.parseCommits = function (parseFn) {
     gitlog({
       repo: this._repo, 
@@ -67,6 +73,8 @@ var GitTimeLog = function (opts) {
     );
   };
 
+  // parses the commits, then asynchronously calls done(), 
+  //   passing an array of { authorEmail: minutes }
   this.minsByAuthor = function (done) {
     var self = this;
     this.parseCommits(function (commits) {
@@ -85,6 +93,8 @@ var GitTimeLog = function (opts) {
     });
   };
 
+  // parses the commits, then asynchronously calls done(), 
+  //   passing the total minutes logged (for <number> commits by <author>)
   this.totalMinutes = function (done) {
     var self = this;
     this.parseCommits(function (commits) {
