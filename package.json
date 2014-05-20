@@ -2,7 +2,7 @@
   "name": "git-time-log",
   "private": true,
   "scripts": {
-    "test": "NODE_ENV=test mocha --reporter list"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
