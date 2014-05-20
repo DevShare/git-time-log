@@ -9,8 +9,6 @@ var gitlog = require('gitlog'),
 
 var GitTimeLog = function (opts) {
 
-  var self = this;
-
   opts = opts || {};
 
   this._repo = opts['repo'] || '.';
@@ -20,10 +18,13 @@ var GitTimeLog = function (opts) {
         hours = Math.floor(duration.asHours()),
         mins = totalMins - (hours * 60);
 
+    // ensure mins is 2 characters in length
     if (mins.toString().length < 2) {
       mins = '0' + mins.toString();
     }
-    hours = hours.toString();
+
+    // allow hours to be an empty string
+    hours = hours !== 0 ? hours.toString() : '';
 
     return '~' + hours + ':' + mins;
   };
@@ -43,13 +44,13 @@ var GitTimeLog = function (opts) {
   };
 
   this.getMinsFromMessage = function (message) {
-    var messageTime = self.getTimeFromMessage(message);
+    var messageTime = this.getTimeFromMessage(message);
 
     return (messageTime.hours * 60) + messageTime.minutes;
   };
 
   this.parseCommits = function (parseFn) {
-    gitlog({ repo: self._repo, fields: ['subject', 'authorEmail'], number: 9999999 },
+    gitlog({ repo: this._repo, fields: ['subject', 'authorEmail'], number: 9999999 },
       function (err, commits) {
         if (err) {
           throw(err);
@@ -61,7 +62,8 @@ var GitTimeLog = function (opts) {
   };
 
   this.minsByAuthor = function (done) {
-    self.parseCommits(function (commits) {
+    var self = this;
+    this.parseCommits(function (commits) {
       // calculate the total time in commit messages
       var totalByUser = _.reduce(commits, function (totals, commit) {
         var userTotal = totals[commit.authorEmail] || 0,
@@ -78,7 +80,8 @@ var GitTimeLog = function (opts) {
   };
 
   this.totalMinutes = function (done) {
-    self.parseCommits(function (commits) {
+    var self = this;
+    this.parseCommits(function (commits) {
       // calculate the total time in commit messages
       var total = _.reduce(commits, function (total, commit) {
         return total + self.getMinsFromMessage(commit.subject);
