@@ -9,7 +9,9 @@
     "url": "https://github.com/DevShare/git-time-log.git"
   },
   "dependencies": {
+    "commander": "^2.2.0",
     "gitlog": "0.0.1",
+    "moment": "^2.6.0",
     "underscore": "^1.6.0"
   },
   "devDependencies": {
