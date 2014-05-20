@@ -4,6 +4,9 @@
   "scripts": {
     "test": "mocha"
   },
+  "bin": {
+    "git-time-log": "./bin/git-time-log"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/DevShare/git-time-log.git"
