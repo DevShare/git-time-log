@@ -12,6 +12,8 @@ var GitTimeLog = function (opts) {
   opts = opts || {};
 
   this._repo = opts['repo'] || '.';
+  this._author = opts['author'];
+  this._number = opts['number'] || 9999999;
 
   this.formatTime = function (totalMins) {
     var duration = moment.duration({ minutes: totalMins }),
@@ -50,7 +52,11 @@ var GitTimeLog = function (opts) {
   };
 
   this.parseCommits = function (parseFn) {
-    gitlog({ repo: this._repo, fields: ['subject', 'authorEmail'], number: 9999999 },
+    gitlog({
+      repo: this._repo, 
+      author: this._author, 
+      fields: ['subject', 'authorEmail'], 
+      number: this._number },
       function (err, commits) {
         if (err) {
           throw(err);
@@ -97,13 +103,15 @@ module.exports = GitTimeLog;
 // For command-line usage...
 program
   .version('0.0.1')
-  .option('-d, --dir <path>', 'Set the path to parse. Defaults to current directory.');
+  .option('-d, --dir <path>', 'Set the path to parse. Defaults to current directory.')
+  .option('-a, --author <author>', 'Returns only time for the given author.')
+  .option('-n, --number <number>', 'Number of commits to parse.');
 
 program
-  .command('author')
+  .command('authors')
   .description('Returns time by author')
   .action(function(env){
-    var gtl = new GitTimeLog({ repo: program.dir });
+    var gtl = new GitTimeLog({ repo: program.dir, number: program.number });
     gtl.minsByAuthor(function (results) {
       _.each(results, function (totalMins, author) {
         console.log(author + ': ' + gtl.formatTime(totalMins));
@@ -115,7 +123,7 @@ program
   .command('total')
   .description('Returns total time for repo')
   .action(function(env){
-    var gtl = new GitTimeLog({ repo: program.dir });
+    var gtl = new GitTimeLog({ repo: program.dir, author: program.author, number: program.number });
     gtl.totalMinutes(function (mins) {
       console.log(gtl.formatTime(mins));
     });
