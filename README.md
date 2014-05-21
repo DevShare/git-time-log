@@ -1,6 +1,8 @@
 git-time-log
 ==============
 
+[![Build Status](https://travis-ci.org/DevShare/git-time-log.svg?branch=master)](https://travis-ci.org/DevShare/git-time-log)
+
 Provides statistics for time entries in commit messages.
 
 Still in early-stage development, but the basics work.
